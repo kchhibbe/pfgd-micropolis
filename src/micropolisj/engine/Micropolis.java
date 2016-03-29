@@ -86,6 +86,8 @@ public class Micropolis
 	public int [][] fireRate;       //firestations reach- used for overlay graphs
 	int [][] policeMap;      //police stations- cleared and rebuilt each sim cycle
 	public int [][] policeMapEffect;//police stations reach- used for overlay graphs
+	int [][] schoolMap;      //schools- cleared and rebuilt each sim cycle
+	public int [][] schoolMapEffect;//schools reach- used for overlay graphs
 
 	/** For each 8x8 section of city, this is an integer between 0 and 64,
 	 * with higher numbers being closer to the center of the city. */
@@ -119,6 +121,7 @@ public class Micropolis
 	int hospitalCount;
 	int churchCount;
 	int policeCount;
+	int schoolCount;
 	int fireStationCount;
 	int stadiumCount;
 	int coalCount;
@@ -135,6 +138,7 @@ public class Micropolis
 	int lastTotalPop;
 	int lastFireStationCount;
 	int lastPoliceCount;
+	int lastSchoolCount;
 
 	int trafficMaxLocationX;
 	int trafficMaxLocationY;
@@ -171,11 +175,13 @@ public class Micropolis
 	public int cityTax = 7;
 	public double roadPercent = 1.0;
 	public double policePercent = 1.0;
+	public double schoolPercent = 1.0;
 	public double firePercent = 1.0;
 
 	int taxEffect = 7;
 	int roadEffect = 32;
 	int policeEffect = 1000;
+	int schoolEffect = 1000;
 	int fireEffect = 1000;
 
 	int cashFlow; //net change in totalFunds in previous year
@@ -244,6 +250,8 @@ public class Micropolis
 		fireStMap = new int[smY][smX];
 		policeMap = new int[smY][smX];
 		policeMapEffect = new int[smY][smX];
+		schoolMap = new int[smY][smX];
+		schoolMapEffect = new int[smY][smX];
 		fireRate = new int[smY][smX];
 		comRate = new int[smY][smX];
 
@@ -532,6 +540,7 @@ public class Micropolis
 		hospitalCount = 0;
 		churchCount = 0;
 		policeCount = 0;
+		schoolCount = 0;
 		fireStationCount = 0;
 		stadiumCount = 0;
 		coalCount = 0;
@@ -544,6 +553,7 @@ public class Micropolis
 			for (int x = 0; x < fireStMap[y].length; x++) {
 				fireStMap[y][x] = 0;
 				policeMap[y][x] = 0;
+				schoolMap[y][x] = 0;
 			}
 		}
 	}
@@ -1463,6 +1473,7 @@ public class Micropolis
 		bb.put("NUCLEAR", new MapScanner(this, MapScanner.B.NUCLEAR));
 		bb.put("FIRESTATION", new MapScanner(this, MapScanner.B.FIRESTATION));
 		bb.put("POLICESTATION", new MapScanner(this, MapScanner.B.POLICESTATION));
+		bb.put("SCHOOL", new MapScanner(this, MapScanner.B.SCHOOL));
 		bb.put("STADIUM_EMPTY", new MapScanner(this, MapScanner.B.STADIUM_EMPTY));
 		bb.put("STADIUM_FULL", new MapScanner(this, MapScanner.B.STADIUM_FULL));
 		bb.put("AIRPORT", new MapScanner(this, MapScanner.B.AIRPORT));
@@ -1730,6 +1741,7 @@ public class Micropolis
 		lastTotalPop = totalPop;
 		lastFireStationCount = fireStationCount;
 		lastPoliceCount = policeCount;
+		lastSchoolCount = schoolCount;
 
 		BudgetNumbers b = generateBudget();
 
@@ -1783,6 +1795,9 @@ public class Micropolis
 
 	/** Annual maintenance cost of each police station. */
 	static final int POLICE_STATION_MAINTENANCE = 100;
+	
+	/** Annual maintenance cost of each school. */
+	static final int SCHOOL_MAINTENANCE = 100;
 
 	/** Annual maintenance cost of each fire station. */
 	static final int FIRE_STATION_MAINTENANCE = 100;
@@ -1797,6 +1812,7 @@ public class Micropolis
 		b.roadPercent = Math.max(0.0, roadPercent);
 		b.firePercent = Math.max(0.0, firePercent);
 		b.policePercent = Math.max(0.0, policePercent);
+		b.schoolPercent = Math.max(0.0, schoolPercent);
 
 		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
@@ -1805,10 +1821,12 @@ public class Micropolis
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
 		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
 		b.policeRequest = POLICE_STATION_MAINTENANCE * lastPoliceCount;
+		b.schoolRequest = SCHOOL_MAINTENANCE * lastSchoolCount;
 
 		b.roadFunded = (int)Math.round(b.roadRequest * b.roadPercent);
 		b.fireFunded = (int)Math.round(b.fireRequest * b.firePercent);
 		b.policeFunded = (int)Math.round(b.policeRequest * b.policePercent);
+		b.schoolFunded = (int)Math.round(b.schoolRequest * b.schoolPercent);
 
 		int yumDuckets = budget.totalFunds + b.taxIncome;
 		assert yumDuckets >= 0;
