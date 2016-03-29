@@ -69,6 +69,7 @@ public enum MicropolisTool
 		case POWERPLANT:
 		case NUCLEAR:
 		case AIRPORT:
+		case SCHOOL:
 			return new BuildingTool(engine, this, xpos, ypos);
 
 		default:
