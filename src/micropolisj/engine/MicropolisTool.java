@@ -29,7 +29,8 @@ public enum MicropolisTool
 	POWERPLANT(4, 3000),
 	NUCLEAR(4, 5000),
 	AIRPORT(6, 10000),
-	QUERY(1, 0);
+	QUERY(1, 0),
+	SCHOOL(3,2000);
 
 	int size;
 	int cost;
