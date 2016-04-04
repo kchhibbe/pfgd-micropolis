@@ -37,6 +37,12 @@ public class CityBudget
 	 * Amount of prepaid police station maintenance (in 1/TAXFREQ's).
 	 */
 	int policeFundEscrow;
+	
+	/**
+	 * Amount of prepaid school station maintenance (in 1/TAXFREQ's).
+	 */
+	int schoolFundEscrow;
+
 
 	CityBudget(Micropolis city)
 	{

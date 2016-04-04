@@ -281,6 +281,7 @@ class MapScanner extends TileBehavior
 
 		city.schoolMap[ypos/8][xpos/8] += z;
 	}
+	
 	void doStadiumEmpty()
 	{
 		boolean powerOn = checkZonePower();

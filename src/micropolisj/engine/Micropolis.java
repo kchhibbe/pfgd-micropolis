@@ -1478,6 +1478,7 @@ public class Micropolis
 		bb.put("STADIUM_FULL", new MapScanner(this, MapScanner.B.STADIUM_FULL));
 		bb.put("AIRPORT", new MapScanner(this, MapScanner.B.AIRPORT));
 		bb.put("SEAPORT", new MapScanner(this, MapScanner.B.SEAPORT));
+		bb.put("SCHOOL", new MapScanner(this, MapScanner.B.SCHOOL));
 
 		this.tileBehaviors = bb;
 	}
@@ -1757,6 +1758,9 @@ public class Micropolis
 		policeEffect = b.policeRequest != 0 ?
 			(int)Math.floor(1000.0 * (double)b.policeFunded / (double)b.policeRequest) :
 			1000;
+		schoolEffect = b.schoolRequest != 0 ?
+				(int)Math.floor(1000.0 * (double)b.schoolFunded / (double)b.schoolRequest) :
+			1000;
 		fireEffect = b.fireRequest != 0 ?
 			(int)Math.floor(1000.0 * (double)b.fireFunded / (double)b.fireRequest) :
 			1000;
@@ -1791,6 +1795,7 @@ public class Micropolis
 		budget.roadFundEscrow = 0;
 		budget.fireFundEscrow = 0;
 		budget.policeFundEscrow = 0;
+		budget.schoolFundEscrow = 0;
 	}
 
 	/** Annual maintenance cost of each police station. */
