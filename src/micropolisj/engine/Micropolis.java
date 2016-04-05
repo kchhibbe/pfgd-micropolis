@@ -1263,8 +1263,14 @@ public class Micropolis
 					dis *= 4;
 					dis += terrainMem[y/2][x/2];
 					dis -= pollutionMem[y][x];
+					
+					
 					if (crimeMem[y][x] > 190) {
 						dis -= 20;
+					}
+					
+					if (literacyMem[y][x] > 190) { //Increase Land value if Literacy rate is above 190
+						dis += 20;
 					}
 					if (dis > 250)
 						dis = 250;
@@ -1361,7 +1367,14 @@ public class Micropolis
 		}
 
 		double migration = normResPop * (employment - 1);
-		final double BIRTH_RATE = 0.02;
+		
+		double BIRTH_RATE = 0.02;
+		
+		if(schoolCount == 0)
+			BIRTH_RATE = 0.02;
+		else
+			BIRTH_RATE *= schoolCount; // Birth Rate increases with each school that is added to the map
+		
 		double births = (double)normResPop * BIRTH_RATE;
 		double projectedResPop = normResPop + migration + births;
 
@@ -1871,7 +1884,7 @@ public class Micropolis
 	static final int POLICE_STATION_MAINTENANCE = 100;
 	
 	/** Annual maintenance cost of each school. */
-	static final int SCHOOL_MAINTENANCE = 100;
+	static final int SCHOOL_MAINTENANCE = 200;
 
 	/** Annual maintenance cost of each fire station. */
 	static final int FIRE_STATION_MAINTENANCE = 100;
@@ -2704,6 +2717,9 @@ public class Micropolis
 			if (crimeAverage > 100) {
 				sendMessage(MicropolisMessage.HIGH_CRIME);
 			}
+			else if(literacyAverage < 50){
+				sendMessage(MicropolisMessage.LOW_LITERACY);
+			}
 			break;
 		case 45:
 			if (totalPop > 60 && fireStationCount == 0) {
@@ -2713,6 +2729,9 @@ public class Micropolis
 		case 48:
 			if (totalPop > 60 && policeCount == 0) {
 				sendMessage(MicropolisMessage.NEED_POLICE);
+			}
+			else if (totalPop > 60 && schoolCount == 0) {
+				sendMessage(MicropolisMessage.NEED_SCHOOL);
 			}
 			break;
 		case 51:
@@ -2733,6 +2752,9 @@ public class Micropolis
 		case 60:
 			if (policeEffect < 700 && totalPop > 20) {
 				sendMessage(MicropolisMessage.POLICE_NEED_FUNDING);
+			}
+			else if (schoolEffect < 700 && totalPop > 20) {
+				sendMessage(MicropolisMessage.SCHOOL_NEED_FUNDING);
 			}
 			break;
 		case 63:
