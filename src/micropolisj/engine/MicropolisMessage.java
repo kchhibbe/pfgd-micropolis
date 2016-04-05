@@ -60,7 +60,10 @@ public enum MicropolisMessage
 	RIOTING_REPORT,
 
 	// added by Jason
-	NO_NUCLEAR_PLANTS;
+	NO_NUCLEAR_PLANTS,
+	NEED_SCHOOL,
+	SCHOOL_NEED_FUNDING,
+	LOW_LITERACY;
 
 	/** Whether the message should be displayed in the notification pane. */
 	public boolean useNotificationPane = false;
@@ -74,6 +77,7 @@ public enum MicropolisMessage
 	POP_100K_REACHED.useNotificationPane = true;
 	POP_500K_REACHED.useNotificationPane = true;
 	HIGH_CRIME.useNotificationPane = true;
+	LOW_LITERACY.useNotificationPane = true;
 	HIGH_POLLUTION.useNotificationPane = true;
 
 	// location-specific

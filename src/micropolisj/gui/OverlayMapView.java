@@ -170,6 +170,17 @@ public class OverlayMapView extends JComponent
 			}
 		}
 	}
+	
+	private void drawLiteracyMap(Graphics gr)
+	{
+		int [][] A = engine.literacyMem;
+
+		for (int y = 0; y < A.length; y++) {
+			for (int x = 0; x < A[y].length; x++) {
+				maybeDrawRect(gr, getCI(A[y][x]),x*6,y*6,6,6);
+			}
+		}
+	}
 
 	private void drawPopDensity(Graphics gr)
 	{
@@ -397,6 +408,8 @@ public class OverlayMapView extends JComponent
 			drawFireRadius(gr); break;
 		case CRIME_OVERLAY:
 			drawCrimeMap(gr); break;
+		case LITERACY_OVERLAY:
+			drawLiteracyMap(gr); break;
 		case POLLUTE_OVERLAY:
 			drawPollutionMap(gr); break;
 		case GROWTHRATE_OVERLAY:

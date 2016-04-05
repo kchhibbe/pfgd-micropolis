@@ -95,6 +95,7 @@ public class CityEval
 		z += engine.roadTotal * 5;
 		z += engine.railTotal * 10;
 		z += engine.policeCount * 1000;
+		z += engine.schoolCount * 1000;
 		z += engine.fireStationCount * 1000;
 		z += engine.hospitalCount * 400;
 		z += engine.stadiumCount * 3000;
@@ -124,6 +125,7 @@ public class CityEval
 	{
 		problemTable.clear();
 		problemTable.put(CityProblem.CRIME, engine.crimeAverage);
+		problemTable.put(CityProblem.LITERACY, engine.literacyAverage);
 		problemTable.put(CityProblem.POLLUTION, engine.pollutionAverage);
 		problemTable.put(CityProblem.HOUSING, (int)Math.round(engine.landValueAverage * 0.7));
 		problemTable.put(CityProblem.TAXES, engine.cityTax * 10);
@@ -236,6 +238,7 @@ public class CityEval
 		if (engine.indCap) { z = 0.85 * z; }
 		if (engine.roadEffect < 32) { z -= (32 - engine.roadEffect); }
 		if (engine.policeEffect < 1000) { z *= (0.9 + (engine.policeEffect / 10000.1)); }
+		if (engine.schoolEffect < 1000) { z *= (0.9 + (engine.schoolEffect / 10000.1)); }
 		if (engine.fireEffect < 1000) { z *= (0.9 + (engine.fireEffect / 10000.1)); }
 		if (engine.resValve < -1000) { z *= 0.85; }
 		if (engine.comValve < -1000) { z *= 0.85; }
