@@ -23,6 +23,8 @@ public class ZoneStatus
 	public int landValue;
 	/** Number from 9 to 12, 9=Safe, 10=Light, 11=Moderate, etc. */
 	public int crimeLevel;
+	/** Number from 9 to 12, 9=Safe, 10=Light, 11=Moderate, etc. */
+	public int literacyLevel;
 	/** Number from 13 to 16, 13=None, 14=Moderate, 15=Heavy, etc. */
 	public int pollution;
 	/** Number from 17 to 20, 17=Declining, 18=Stable, etc. */
